@@ -1,0 +1,241 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Identidade Ariuno: a mesma da plataforma e do material comercial */
+  --color-ink: #0b0d1e;
+  --color-ink-2: #151934;
+  --color-ink-3: #1e234a;
+  --color-iris: #6a5cff;
+  --color-iris-l: #8e82ff;
+  --color-iris-d: #4b3be0;
+  --color-blue: #4285ff;
+  --color-teal: #00c2a8;
+  --color-paper: #f7f8fd;
+  --color-paper-2: #eaedf9;
+  --color-paper-3: #dfe4f5;
+  --color-txt: #0b0d1e;
+  --color-txt-2: #5a6180;
+  --color-txt-3: #696f8d;
+  --color-lime: #c0ee4e;
+  --color-alerta: #e0453c;
+  --color-ok: #0e8a6a;
+
+  --font-display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+
+  --radius-peca: 18px;
+}
+
+@layer base {
+  * { -webkit-tap-highlight-color: transparent; }
+
+  html {
+    overflow-x: clip;
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-txt);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.6;
+    overflow-x: clip;
+    font-synthesis-weight: none;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+
+  ::selection { background: var(--color-iris); color: #fff; }
+
+  :focus-visible {
+    outline: 3px solid var(--color-iris);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .escuro :focus-visible { outline-color: var(--color-lime); }
+
+  img { max-width: 100%; height: auto; }
+}
+
+@layer components {
+  /* Rotulo curto em mono. Usado so nos numeradores de secao. */
+  .rotulo {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* Titulos display responsivos */
+  .titulo-1 { font-size: clamp(40px, 7.4vw, 92px); }
+  .titulo-2 { font-size: clamp(32px, 5.4vw, 62px); }
+  .titulo-3 { font-size: clamp(22px, 2.6vw, 30px); }
+
+  .lead {
+    font-size: clamp(16px, 1.35vw, 19px);
+    line-height: 1.62;
+    color: var(--color-txt-2);
+    max-width: 62ch;
+  }
+  .escuro .lead { color: #aab1cd; }
+
+  /* Superficies solidas, sem contorno e sem brilho colorido */
+  .peca {
+    background: #fff;
+    border-radius: var(--radius-peca);
+    box-shadow: 0 1px 2px rgb(11 13 30 / 0.05), 0 12px 32px -22px rgb(11 13 30 / 0.28);
+  }
+  .peca-escura {
+    background: var(--color-ink-2);
+    border-radius: var(--radius-peca);
+  }
+
+  .secao { padding-block: clamp(68px, 9vw, 132px); }
+
+  .limite {
+    width: min(1220px, 100% - 2 * clamp(20px, 5vw, 64px));
+    margin-inline: auto;
+  }
+
+  /* Moldura de navegador dos prints do produto */
+  .moldura {
+    background: var(--color-ink-2);
+    border-radius: 14px;
+    padding: 10px 10px 0;
+    box-shadow: 0 30px 60px -34px rgb(11 13 30 / 0.55);
+    overflow: hidden;
+  }
+  .moldura-barra {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 4px 9px;
+  }
+  .moldura-barra i {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: rgb(255 255 255 / 0.16);
+  }
+  .moldura-url {
+    margin-left: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgb(255 255 255 / 0.58);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .moldura img {
+    display: block;
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+    background: var(--color-paper);
+  }
+
+  /* Entrada por rolagem */
+  .revelar {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--atraso, 0ms);
+  }
+  .revelar.dentro { opacity: 1; transform: none; }
+
+  .grao {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .revelar { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Cursor proprio, so em ponteiro fino. Dois tons para aparecer sobre qualquer cor. */
+@media (pointer: fine) {
+  .cursor-proprio { cursor: none; }
+  .cursor-proprio a, .cursor-proprio button, .cursor-proprio input,
+  .cursor-proprio select, .cursor-proprio textarea, .cursor-proprio label { cursor: none; }
+}
+
+@keyframes desliza {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes preencher {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Controles deslizantes das calculadoras: trilho sólido, sem contorno */
+input[type='range'] {
+  --trilho: var(--color-paper-3);
+  --preenchido: 50%;
+  height: 26px;
+  cursor: pointer;
+}
+.escuro input[type='range'] { --trilho: rgb(255 255 255 / 0.16); }
+
+input[type='range']::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-iris) var(--preenchido), var(--trilho) var(--preenchido));
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -9px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  box-shadow: 0 2px 10px rgb(11 13 30 / 0.28);
+}
+input[type='range']::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--trilho);
+}
+input[type='range']::-moz-range-progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--color-iris);
+}
+input[type='range']::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-ink);
+}
+input[type='range']:focus-visible::-webkit-slider-thumb { outline: 3px solid var(--color-iris); outline-offset: 3px; }
+
+/* Nenhuma tabela ou campo herda contorno do navegador */
+select { appearance: none; background-image: none; }
+textarea { font-family: inherit; }
+
+.escuro select,
+.escuro input,
+.escuro textarea { color-scheme: dark; }
