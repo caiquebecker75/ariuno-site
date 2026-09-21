@@ -111,7 +111,7 @@ export default function Investimento() {
           <ul className="grid gap-[3px] sm:grid-cols-2 lg:grid-cols-6">
             {investimento.faixas.map((f, i) => {
               const dentroDaFaixa = usuarios >= f.de && usuarios <= f.ate;
-              const altura = 28 + (f.preco / MAIOR) * 62;
+              const altura = 26 + (f.preco / MAIOR) * 92;
               return (
                 <Revelar key={f.rotulo} como="li" atraso={i * 60}>
                   <div
@@ -122,7 +122,7 @@ export default function Investimento() {
                     }}
                   >
                     <div
-                      className="mb-4 max-h-[26px] w-[62px] rounded-[5px] transition-[height] duration-500 lg:max-h-none"
+                      className="mb-4 max-h-[26px] w-[30px] rounded-[4px] transition-[height] duration-500 lg:max-h-none"
                       style={{
                         height: altura,
                         background: dentroDaFaixa ? 'linear-gradient(180deg,#8E82FF,#00C2A8)' : 'rgb(106 92 255 / 0.22)',
