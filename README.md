@@ -17,6 +17,43 @@ do briefing à nota fiscal. Cada seção tem um formato próprio, nenhuma repete
 anterior, e as duas calculadoras deixam o visitante fazer a conta com os números dele:
 quanto custa o retrabalho hoje e quanto custa o Ariuno para o time dele.
 
+### O que é cinematográfico aqui
+
+- **Abertura em camadas:** o traço da marca se desenha, o título sobe linha a linha por
+  trás de uma máscara e o print, o timer e o alerta de contrato andam em velocidades
+  diferentes conforme a rolagem.
+- **Cena presa na tela (seção *Como funciona*):** a página trava por seis passos e a
+  rolagem vira o controle do ciclo. Cada etapa acende, o print troca e a barra de
+  progresso anda. No celular e no modo de movimento reduzido, a mesma informação vira
+  uma lista tocável, sem travar a rolagem.
+- **Comparador arrastável:** o visitante puxa a barra verde e vê a operação sair de seis
+  lugares para um.
+- **Prints que reagem:** inclinam de leve com o ponteiro e abrem em tela cheia no clique.
+- **Medidor de contrato, contadores e barras** que só começam a contar quando entram na
+  tela.
+
+### Arquitetura de conversão
+
+Há um caminho de saída em cada ponto de decisão, com o verbo do momento, nunca um
+"enviar" genérico:
+
+| Momento | Chamada |
+|---|---|
+| Abertura | Agendar o piloto de 30 dias |
+| Depois da conta do retrabalho | Quero parar de queimar R$ X por mês (o valor que a pessoa acabou de simular) |
+| Depois do ciclo | Quero esse ciclo rodando na minha empresa |
+| Depois do produto | Montar meu quadro |
+| Depois das horas | Quero ver minhas horas virarem margem |
+| Depois do relatório do cliente | Quero esse relatório na minha reunião |
+| Depois do comparativo | Pedir a minha proposta |
+| No simulador de preço | Quero a proposta para N usuários |
+| Depois da implantação | Começar o piloto de 30 dias |
+| No formulário | Quero recuperar R$ X por mês |
+
+Somam-se a isso a **barra fixa de conversão** (aparece quando a abertura termina e some
+quando o formulário entra na tela), a **trilha de capítulos** na lateral e os selos de
+confiança: sem fidelidade, cliente não paga assento, resposta em um dia útil.
+
 Ordem da narrativa: quem somos → o problema → a conta do problema → o ciclo completo →
 o produto por dentro (prints reais) → a hora vira dinheiro → a prova de valor para o cliente
 → cinco operações diferentes → comparativo com a concorrência → investimento → implantação
@@ -130,8 +167,10 @@ O `index.html`, o `sitemap.xml` e a política de privacidade já apontam para
 - React 19 + TypeScript
 - Vite 7 (build de várias páginas: início, privacidade, 404)
 - Tailwind CSS 4, com os tokens da marca em `src/styles/base.css`
-- Animações em CSS puro com `IntersectionObserver` (sem biblioteca de animação, para o site
-  ficar leve), respeitando `prefers-reduced-motion`
+- Animações em CSS puro com `IntersectionObserver` e `requestAnimationFrame` (sem
+  biblioteca de animação, para o site ficar leve), respeitando `prefers-reduced-motion`
+- Família de 36 ícones desenhados para a marca em `src/components/Icone.tsx`, traço de
+  1,8 sobre grade de 24. Para usar um novo: `<Icone nome="foguete" tamanho={20} />`
 - Playwright para capturar os prints e para os testes de tela
 - Pillow (Python) para otimizar as imagens
 
@@ -146,7 +185,8 @@ no total e entram em carregamento preguiçoso, com versão de 760px para celular
 - Acordeão com `aria-expanded` e `aria-controls`
 - Contraste conferido texto a texto: **zero falhas** no padrão AA, no desktop e no celular
 - `prefers-reduced-motion` desliga a rolagem suave, o carrossel de funcionalidades, a faixa
-  deslizante e o cursor próprio
+  deslizante, a cena presa na tela, o parallax e o cursor próprio
+- A tela cheia dos prints fecha no `Esc`, devolve o foco e trava a rolagem de fundo
 - O cursor customizado só aparece em ponteiro fino, e a experiência inteira funciona no toque
 
 ## Conteúdo provisório
