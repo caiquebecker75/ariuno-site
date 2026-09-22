@@ -10,7 +10,7 @@ import { brl } from '../hooks/uteis';
 const MAIOR = investimento.faixas[0].preco;
 
 export default function Investimento() {
-  const [usuarios, setUsuarios] = useState(30);
+  const [usuarios, setUsuarios] = useState(5);
   const plano = useMemo(() => mensalidade(usuarios), [usuarios]);
   const faixaAtual = faixaDe(usuarios);
   const anual = plano.total * 12 * 0.85;
