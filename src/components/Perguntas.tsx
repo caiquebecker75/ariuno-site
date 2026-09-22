@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { perguntas } from '../content/site';
-import { Revelar, Rotulo, Titulo } from './base';
+import { Botao, Revelar, Rotulo, TituloCinema } from './base';
+import { Icone } from './Icone';
 
 export default function Perguntas() {
   const [aberta, setAberta] = useState<number | null>(0);
@@ -13,13 +14,20 @@ export default function Perguntas() {
             <Revelar>
               <Rotulo n="11" texto={perguntas.eyebrow} />
             </Revelar>
-            <Revelar atraso={80}>
-              <Titulo linhas={perguntas.titulo} destaque={perguntas.destaque} />
-            </Revelar>
+            <TituloCinema linhas={perguntas.titulo} destaque={perguntas.destaque} />
             <Revelar atraso={140}>
               <p className="lead mt-6">
                 Se a sua dúvida não estiver aqui, mande no formulário logo abaixo. Quem responde é
                 quem construiu a plataforma.
+              </p>
+              <div className="mt-7 flex flex-wrap items-center gap-3">
+                <Botao href="#conversar" icone="email">
+                  Perguntar direto para quem construiu
+                </Botao>
+              </div>
+              <p className="mt-4 flex items-center gap-2 text-[14px] text-txt-2">
+                <span className="text-iris"><Icone nome="relogio" tamanho={16} /></span>
+                Resposta em até um dia útil.
               </p>
             </Revelar>
           </div>
@@ -29,7 +37,7 @@ export default function Perguntas() {
               const ativo = aberta === i;
               return (
                 <Revelar key={item.p} como="li" atraso={i * 45}>
-                  <div className="overflow-hidden rounded-[14px] bg-white">
+                  <div className="peca-viva overflow-hidden rounded-[14px] bg-white">
                     <h3>
                       <button
                         type="button"

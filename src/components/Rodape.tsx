@@ -1,5 +1,6 @@
 import { contato, nav, rodape, site } from '../content/site';
 import { Marca } from './base';
+import { Icone } from './Icone';
 
 export default function Rodape() {
   return (
@@ -44,7 +45,8 @@ export default function Rodape() {
             <p className="rotulo mb-4 text-white/55">Contato</p>
             <ul className="flex flex-col gap-[10px] text-[15px]">
               <li>
-                <a href={`mailto:${contato.email}`} className="text-white/60 transition-colors duration-300 hover:text-white">
+                <a href={`mailto:${contato.email}`} className="flex items-center gap-2 text-white/60 transition-colors duration-300 hover:text-white">
+                  <Icone nome="email" tamanho={16} />
                   {contato.email}
                 </a>
               </li>
@@ -54,8 +56,9 @@ export default function Rodape() {
                     href={`https://wa.me/${contato.whatsapp}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-white/60 transition-colors duration-300 hover:text-white"
+                    className="flex items-center gap-2 text-white/60 transition-colors duration-300 hover:text-white"
                   >
+                    <Icone nome="whatsapp" tamanho={16} />
                     WhatsApp
                   </a>
                 </li>
@@ -85,7 +88,7 @@ export default function Rodape() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 pt-6 text-[13px] text-white/55 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-3 pb-[76px] pt-6 sm:pb-[72px] text-[13px] text-white/55 sm:flex-row sm:items-center sm:justify-between">
           <p>{rodape.legal}</p>
           <p className="flex gap-5">
             <a href="./privacidade.html" className="transition-colors duration-300 hover:text-white/70">

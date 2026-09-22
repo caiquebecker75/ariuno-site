@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { operacoes } from '../content/site';
-import { Revelar, Rotulo, Titulo } from './base';
+import { Botao, Revelar, Rotulo, TituloCinema } from './base';
+import { Icone } from './Icone';
 
 export default function Operacoes() {
   const [ativa, setAtiva] = useState(0);
@@ -13,9 +14,7 @@ export default function Operacoes() {
           <Revelar>
             <Rotulo n="07" texto={operacoes.eyebrow} />
           </Revelar>
-          <Revelar atraso={80}>
-            <Titulo linhas={operacoes.titulo} destaque={operacoes.destaque} />
-          </Revelar>
+          <TituloCinema linhas={operacoes.titulo} destaque={operacoes.destaque} />
         </div>
 
         <Revelar atraso={140}>
@@ -33,12 +32,15 @@ export default function Operacoes() {
                   if (e.key === 'ArrowRight') setAtiva((ativa + 1) % operacoes.itens.length);
                   if (e.key === 'ArrowLeft') setAtiva((ativa - 1 + operacoes.itens.length) % operacoes.itens.length);
                 }}
-                className="rounded-full px-5 py-[11px] text-[15px] font-medium transition-[background-color,color] duration-300"
+                className="flex items-center gap-[10px] rounded-full px-5 py-[11px] text-[15px] font-medium transition-[background-color,color] duration-300"
                 style={{
                   background: i === ativa ? 'var(--color-ink)' : 'var(--color-paper-2)',
                   color: i === ativa ? '#fff' : 'var(--color-txt-2)',
                 }}
               >
+                <span style={{ color: i === ativa ? 'var(--color-lime)' : 'var(--color-iris)' }}>
+                  <Icone nome={item.icone} tamanho={18} />
+                </span>
                 {item.nome}
               </button>
             ))}
@@ -49,7 +51,12 @@ export default function Operacoes() {
           <div id="painel-operacao" role="tabpanel" aria-labelledby={`aba-op-${op.id}`} className="peca mt-4 overflow-hidden">
             <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,0.78fr)]">
               <div className="p-[clamp(24px,3vw,46px)]">
-                <h3 className="font-display text-[clamp(24px,2.8vw,36px)] font-bold tracking-[-0.03em]">{op.nome}</h3>
+                <h3 className="flex items-center gap-3 font-display text-[clamp(24px,2.8vw,36px)] font-bold tracking-[-0.03em]">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-[14px] bg-paper-2 text-iris">
+                    <Icone nome={op.icone} tamanho={24} />
+                  </span>
+                  {op.nome}
+                </h3>
                 <p key={op.id} className="lead mt-4 text-[17px]">
                   {op.texto}
                 </p>
@@ -76,10 +83,18 @@ export default function Operacoes() {
               </div>
 
               <div className="flex flex-col justify-center bg-ink p-[clamp(24px,3vw,46px)]">
-                <p className="rotulo text-white/55">O retorno</p>
+                <p className="rotulo flex items-center gap-2 text-white/55">
+                  <span className="text-lime"><Icone nome="grafico" tamanho={15} /></span>
+                  O retorno
+                </p>
                 <p className="mt-4 font-display text-[clamp(20px,2.2vw,26px)] font-bold leading-[1.15] tracking-[-0.025em] text-white">
                   {op.retorno}
                 </p>
+                <div className="mt-6">
+                  <Botao href="#conversar" tipo="claro">
+                    Ver isso na minha operação
+                  </Botao>
+                </div>
               </div>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import { cliente, horas } from '../content/site';
-import { Print, Revelar, Rotulo, Titulo } from './base';
+import { Botao, Print, Revelar, Rotulo, Selo, TituloCinema } from './base';
+import { Icone, type NomeIcone } from './Icone';
 import { useContador, useRevelar } from '../hooks/uteis';
 
 /** Medidor do consumo do contrato: o número que faz o cliente renovar ou renegociar. */
@@ -52,9 +53,7 @@ export default function Horas() {
               <Revelar>
                 <Rotulo n="05" texto={horas.eyebrow} claro />
               </Revelar>
-              <Revelar atraso={80}>
-                <Titulo linhas={horas.titulo} destaque={horas.destaque} claro />
-              </Revelar>
+              <TituloCinema linhas={horas.titulo} destaque={horas.destaque} claro />
               <Revelar atraso={140}>
                 <p className="lead mt-6">{horas.lead}</p>
               </Revelar>
@@ -63,7 +62,10 @@ export default function Horas() {
                 {horas.linhas.map((l, i) => (
                   <Revelar key={l.k} atraso={160 + i * 70}>
                     <div className="flex flex-wrap items-baseline justify-between gap-2 rounded-[12px] bg-white/[0.06] px-5 py-4">
-                      <dt className="text-[15px] text-white/70">{l.k}</dt>
+                      <dt className="flex items-center gap-3 text-[15px] text-white/70">
+                        <span className="text-teal"><Icone nome={i === 0 ? 'play' : 'grafico'} tamanho={18} /></span>
+                        {l.k}
+                      </dt>
                       <dd className="font-mono text-[13px] font-bold uppercase tracking-[0.1em] text-teal">{l.v}</dd>
                     </div>
                   </Revelar>
@@ -77,16 +79,22 @@ export default function Horas() {
                 <div className="mt-6">
                   <Medidor valor={horas.alerta.valor} ativo={dentro} />
                 </div>
-                <p className="mt-6 rounded-[12px] bg-alerta/20 px-4 py-3 text-[14px] leading-snug text-white">
+                <p className="mt-6 flex items-start gap-3 rounded-[12px] bg-alerta/20 px-4 py-3 text-[14px] leading-snug text-white">
+                  <span className="mt-[1px] shrink-0"><Icone nome="alerta" tamanho={17} /></span>
                   {horas.alerta.rodape}
                 </p>
+                <div className="mt-6">
+                  <Botao href="#conversar" tipo="claro" icone="cronometro">
+                    Quero ver minhas horas virarem margem
+                  </Botao>
+                </div>
               </div>
             </Revelar>
           </div>
 
           <Revelar atraso={220}>
             <div className="mt-[clamp(32px,4vw,58px)]">
-              <Print nome={horas.print} alt={horas.printAlt} url="ariuno.com.br · produtividade do time" />
+              <Print nome={horas.print} alt={horas.printAlt} url="ariuno.com.br · produtividade do time" inclinar />
             </div>
           </Revelar>
         </div>
@@ -100,35 +108,53 @@ export default function Horas() {
               <Revelar>
                 <Rotulo n="06" texto={cliente.eyebrow} />
               </Revelar>
-              <Revelar atraso={80}>
-                <Titulo linhas={cliente.titulo} destaque={cliente.destaque} />
-              </Revelar>
+              <TituloCinema linhas={cliente.titulo} destaque={cliente.destaque} />
               <Revelar atraso={140}>
                 <p className="lead mt-6">{cliente.lead}</p>
               </Revelar>
 
               <ul className="mt-8 flex flex-col gap-[2px]">
-                {cliente.selos.map((s, i) => (
-                  <Revelar key={s.titulo} como="li" atraso={160 + i * 70} className="rounded-[12px] bg-paper px-5 py-4">
-                    <p className="font-display text-[17px] font-bold tracking-[-0.02em]">{s.titulo}</p>
-                    <p className="mt-1 text-[15px] leading-snug text-txt-2">{s.texto}</p>
-                  </Revelar>
-                ))}
+                {cliente.selos.map((selo, i) => {
+                  const icones: NomeIcone[] = ['link', 'pdf', 'aprovacao'];
+                  return (
+                    <Revelar key={selo.titulo} como="li" atraso={160 + i * 70} className="flex items-start gap-4 rounded-[12px] bg-paper px-5 py-4">
+                      <span className="mt-[2px] flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] bg-white text-iris">
+                        <Icone nome={icones[i]} tamanho={20} />
+                      </span>
+                      <span>
+                        <span className="block font-display text-[17px] font-bold tracking-[-0.02em]">{selo.titulo}</span>
+                        <span className="mt-1 block text-[15px] leading-snug text-txt-2">{selo.texto}</span>
+                      </span>
+                    </Revelar>
+                  );
+                })}
               </ul>
 
               <Revelar atraso={380}>
-                <div className="mt-6 rounded-[14px] bg-lime px-6 py-5">
-                  <p className="font-display text-[19px] font-bold tracking-[-0.02em] text-ink">
-                    {cliente.destaqueSelo.titulo}
-                  </p>
-                  <p className="mt-1 text-[15px] leading-snug text-ink/70">{cliente.destaqueSelo.texto}</p>
+                <div className="mt-6 flex items-start gap-4 rounded-[14px] bg-lime px-6 py-5">
+                  <span className="mt-[2px] text-ink"><Icone nome="pessoas" tamanho={24} /></span>
+                  <span>
+                    <span className="block font-display text-[19px] font-bold tracking-[-0.02em] text-ink">
+                      {cliente.destaqueSelo.titulo}
+                    </span>
+                    <span className="mt-1 block text-[15px] leading-snug text-ink/70">{cliente.destaqueSelo.texto}</span>
+                  </span>
+                </div>
+              </Revelar>
+
+              <Revelar atraso={440}>
+                <div className="mt-7 flex flex-wrap items-center gap-3">
+                  <Botao href="#conversar" icone="relatorio">
+                    Quero esse relatório na minha reunião
+                  </Botao>
+                  <Selo icone="escudo">Sem custo por usuário cliente</Selo>
                 </div>
               </Revelar>
             </div>
 
             <Revelar atraso={200}>
               <div className="lg:-mr-[12vw]">
-                <Print nome={cliente.print} alt={cliente.printAlt} url="ariuno.com.br · relatório do cliente" />
+                <Print nome={cliente.print} alt={cliente.printAlt} url="ariuno.com.br · relatório do cliente" inclinar />
               </div>
             </Revelar>
           </div>

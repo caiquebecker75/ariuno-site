@@ -1,5 +1,5 @@
 import { comparativo } from '../content/site';
-import { Revelar, Rotulo, Titulo } from './base';
+import { Revelar, Rotulo, TituloCinema } from './base';
 
 function Marca({ tipo, forte = false }: { tipo: string; forte?: boolean }) {
   const rotulos: Record<string, string> = { sim: 'entrega de fábrica', meio: 'parcial', nao: 'não faz' };
@@ -33,9 +33,7 @@ export default function Comparativo() {
             <Revelar>
               <Rotulo n="08" texto={comparativo.eyebrow} />
             </Revelar>
-            <Revelar atraso={80}>
-              <Titulo linhas={comparativo.titulo} destaque={comparativo.destaque} />
-            </Revelar>
+            <TituloCinema linhas={comparativo.titulo} destaque={comparativo.destaque} />
           </div>
           <Revelar atraso={140}>
             <p className="lead">

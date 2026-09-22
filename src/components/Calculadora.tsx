@@ -1,10 +1,12 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { calculadora } from '../content/site';
 import { custoRetrabalho, mensalidade } from '../lib/preco';
-import { Botao, Revelar, Rotulo, Titulo } from './base';
-import { brl, useContador, useRevelar } from '../hooks/uteis';
+import { Botao, Revelar, Rotulo, TituloCinema } from './base';
+import { Icone, type NomeIcone } from './Icone';
+import { anunciarValorEmRisco, brl, useContador, useRevelar } from '../hooks/uteis';
 
 function Controle({
+  icone,
   rotulo,
   valor,
   min,
@@ -13,6 +15,7 @@ function Controle({
   formato,
   aoMudar,
 }: {
+  icone: NomeIcone;
   rotulo: string;
   valor: number;
   min: number;
@@ -26,7 +29,8 @@ function Controle({
   return (
     <div>
       <div className="flex items-baseline justify-between gap-4">
-        <label htmlFor={id} className="text-[15px] font-medium text-txt-2">
+        <label htmlFor={id} className="flex items-center gap-2 text-[15px] font-medium text-txt-2">
+          <span className="text-iris"><Icone nome={icone} tamanho={17} /></span>
           {rotulo}
         </label>
         <output htmlFor={id} className="font-display text-[22px] font-bold tracking-[-0.02em] text-ink">
@@ -60,6 +64,11 @@ export default function Calculadora() {
   );
   const plano = useMemo(() => mensalidade(pessoas), [pessoas]);
   const animado = useContador(conta.mes, dentro, 900);
+
+  // o valor calculado alimenta os botões do site inteiro
+  useEffect(() => {
+    anunciarValorEmRisco(conta.mes);
+  }, [conta.mes]);
   const proporcao = Math.max(3, Math.min(100, (plano.total / Math.max(conta.mes, 1)) * 100));
 
   return (
@@ -71,15 +80,14 @@ export default function Calculadora() {
               <Revelar>
                 <Rotulo n="02" texto={calculadora.eyebrow} />
               </Revelar>
-              <Revelar atraso={80}>
-                <Titulo linhas={calculadora.titulo} destaque={calculadora.destaque} classe="titulo-3 sm:text-[clamp(26px,3.2vw,40px)]" />
-              </Revelar>
+              <TituloCinema linhas={calculadora.titulo} destaque={calculadora.destaque} classe="titulo-3 sm:text-[clamp(26px,3.2vw,40px)]" />
               <Revelar atraso={140}>
                 <p className="lead mt-5 text-[16px]">{calculadora.lead}</p>
               </Revelar>
 
               <div className="mt-9 flex flex-col gap-7">
                 <Controle
+                  icone="pessoas"
                   rotulo="Pessoas no time"
                   valor={pessoas}
                   {...calculadora.limites.pessoas}
@@ -88,6 +96,7 @@ export default function Calculadora() {
                   aoMudar={setPessoas}
                 />
                 <Controle
+                  icone="relogio"
                   rotulo="Horas perdidas por dia, por pessoa"
                   valor={horasDia}
                   {...calculadora.limites.horasDia}
@@ -96,6 +105,7 @@ export default function Calculadora() {
                   aoMudar={setHorasDia}
                 />
                 <Controle
+                  icone="financeiro"
                   rotulo="Valor da hora do time"
                   valor={valorHora}
                   {...calculadora.limites.valorHora}
@@ -150,10 +160,14 @@ export default function Calculadora() {
                 </p>
               </div>
 
-              <div className="mt-9">
-                <Botao href="#investimento" tipo="claro">
-                  Ver a tabela completa
+              <div className="mt-9 flex flex-col gap-3">
+                <Botao href="#conversar" tipo="claro" icone="foguete" grande>
+                  Quero parar de queimar {brl(conta.mes)} por mês
                 </Botao>
+                <a href="#investimento" className="flex items-center gap-2 text-[14px] text-white/60 transition-colors hover:text-white">
+                  ou veja antes quanto custa o Ariuno
+                  <Icone nome="seta" tamanho={15} />
+                </a>
               </div>
             </div>
           </div>

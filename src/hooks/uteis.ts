@@ -97,3 +97,64 @@ export const brl = (n: number, casas = 0) =>
 export const numero = (n: number) => Math.round(n).toLocaleString('pt-BR');
 
 export const urlPublica = (caminho: string) => `${import.meta.env.BASE_URL}${caminho}`;
+
+/**
+ * Progresso da rolagem de um bloco, de 0 a 1.
+ * 0 quando o topo do bloco encosta no fim da tela, 1 quando o fim do bloco
+ * passa pelo topo. Usado nas cenas que avançam conforme a pessoa rola.
+ */
+export function useProgressoRolagem<T extends HTMLElement = HTMLDivElement>() {
+  const ref = useRef<T>(null);
+  const [progresso, setProgresso] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let quadro = 0;
+    const medir = () => {
+      const caixa = el.getBoundingClientRect();
+      const total = caixa.height - window.innerHeight;
+      const andado = -caixa.top;
+      setProgresso(total > 0 ? Math.max(0, Math.min(1, andado / total)) : 0);
+      quadro = 0;
+    };
+    const aoRolar = () => {
+      if (!quadro) quadro = requestAnimationFrame(medir);
+    };
+    medir();
+    window.addEventListener('scroll', aoRolar, { passive: true });
+    window.addEventListener('resize', aoRolar, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', aoRolar);
+      window.removeEventListener('resize', aoRolar);
+      if (quadro) cancelAnimationFrame(quadro);
+    };
+  }, []);
+
+  return { ref, progresso };
+}
+
+/** Abre um print em tela cheia. Quem escuta é o componente Lightbox, no App. */
+export function ampliarPrint(nome: string, alt: string) {
+  window.dispatchEvent(new CustomEvent('ampliar-print', { detail: { nome, alt } }));
+}
+
+let ultimoValorEmRisco = 0;
+
+/** Guarda o último valor calculado na calculadora para os botões falarem a mesma língua. */
+export function usarValorEmRisco() {
+  const [valor, setValor] = useState(ultimoValorEmRisco);
+  useEffect(() => {
+    const ouvir = (e: Event) => setValor((e as CustomEvent<number>).detail);
+    window.addEventListener('valor-em-risco', ouvir);
+    // quem montou antes do anúncio pega o último valor guardado
+    setValor(ultimoValorEmRisco);
+    return () => window.removeEventListener('valor-em-risco', ouvir);
+  }, []);
+  return valor;
+}
+
+export function anunciarValorEmRisco(valor: number) {
+  ultimoValorEmRisco = valor;
+  window.dispatchEvent(new CustomEvent('valor-em-risco', { detail: valor }));
+}

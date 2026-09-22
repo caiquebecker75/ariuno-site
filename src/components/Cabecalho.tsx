@@ -91,8 +91,8 @@ export default function Cabecalho() {
               Entrar
             </a>
             <div className="hidden sm:block">
-              <Botao href="#conversar" tipo="claro">
-                Agendar conversa
+              <Botao href="#conversar" tipo="claro" icone="foguete">
+                Agendar piloto
               </Botao>
             </div>
             <button
@@ -143,8 +143,8 @@ export default function Cabecalho() {
           ))}
         </nav>
         <div className="mt-10 flex flex-col gap-4">
-          <Botao href="#conversar" tipo="claro" onClick={() => setAberto(false)}>
-            Agendar conversa
+          <Botao href="#conversar" tipo="claro" icone="foguete" grande onClick={() => setAberto(false)}>
+            Agendar o piloto de 30 dias
           </Botao>
           <a href={site.plataforma} target="_blank" rel="noopener noreferrer" className="text-white/60">
             Entrar na plataforma

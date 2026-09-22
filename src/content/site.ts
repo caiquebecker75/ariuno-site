@@ -45,8 +45,15 @@ export const hero = {
   lead:
     'Do briefing à nota fiscal num sistema só: o mesmo que roda a 75 LAB todos os dias, com carteira de cliente de verdade.',
   ctaPrimario: { rotulo: 'Agendar o piloto de 30 dias', href: '#conversar' },
-  ctaSecundario: { rotulo: 'Ver o produto por dentro', href: '#produto' },
-  pilulas: ['Kanban, Gantt e calendário', 'Horas e capacidade', 'Aprovações', 'Portal do cliente', 'Financeiro', 'IA'],
+  ctaSecundario: { rotulo: 'Ver por dentro', href: '#produto' },
+  pilulas: [
+    { texto: 'Kanban, Gantt e calendário', icone: 'quadro' },
+    { texto: 'Horas e capacidade', icone: 'cronometro' },
+    { texto: 'Aprovações com histórico', icone: 'aprovacao' },
+    { texto: 'Portal do cliente', icone: 'link' },
+    { texto: 'Financeiro e margem', icone: 'financeiro' },
+    { texto: 'Ariuno IA', icone: 'ia' },
+  ] as const,
   /** Números da operação real da 75 LAB dentro do Ariuno, medidos em agosto de 2026. */
   provas: [
     { valor: 19, rotulo: 'pessoas usando todo dia', sufixo: '' },
@@ -98,6 +105,8 @@ export const ciclo = {
   etapas: [
     {
       n: '01',
+      print: 'formularios',
+      icone: 'formulario' as const,
       nome: 'Briefing',
       resumo: 'Formulário público ou solicitação interna. Vira tarefa sozinho.',
       detalhe:
@@ -106,6 +115,8 @@ export const ciclo = {
     },
     {
       n: '02',
+      print: 'gantt',
+      icone: 'gantt' as const,
       nome: 'Planejamento',
       resumo: 'Projeto, prazo, responsável e checklist a partir de modelo.',
       detalhe:
@@ -114,6 +125,8 @@ export const ciclo = {
     },
     {
       n: '03',
+      print: 'kanban',
+      icone: 'quadro' as const,
       nome: 'Execução',
       resumo: 'Kanban, timer por tarefa, comentários e menções.',
       detalhe:
@@ -122,6 +135,8 @@ export const ciclo = {
     },
     {
       n: '04',
+      print: 'solicitacoes',
+      icone: 'aprovacao' as const,
       nome: 'Aprovação',
       resumo: 'Interna e do cliente, com registro de quem aprovou o quê.',
       detalhe:
@@ -130,6 +145,8 @@ export const ciclo = {
     },
     {
       n: '05',
+      print: 'projetos',
+      icone: 'camadas' as const,
       nome: 'Entrega',
       resumo: 'Anexos, link de entrega e portal do cliente.',
       detalhe:
@@ -138,6 +155,8 @@ export const ciclo = {
     },
     {
       n: '06',
+      print: 'financeiro',
+      icone: 'financeiro' as const,
       nome: 'Cobrança',
       resumo: 'Horas × contrato, relatório e faturamento no mesmo lugar.',
       detalhe:
@@ -151,6 +170,7 @@ export const ciclo = {
 export const funcionalidades = [
   {
     id: 'quadros',
+    icone: 'quadro' as const,
     nome: 'Quadro Kanban',
     url: 'ariuno.com.br · quadros',
     print: 'kanban',
@@ -160,6 +180,7 @@ export const funcionalidades = [
   },
   {
     id: 'gantt',
+    icone: 'gantt' as const,
     nome: 'Gantt e prazos',
     url: 'ariuno.com.br · gantt',
     print: 'gantt',
@@ -169,6 +190,7 @@ export const funcionalidades = [
   },
   {
     id: 'visao',
+    icone: 'painel' as const,
     nome: 'Visão geral do time',
     url: 'ariuno.com.br · visão geral',
     print: 'visao-geral',
@@ -178,6 +200,7 @@ export const funcionalidades = [
   },
   {
     id: 'produtividade',
+    icone: 'cronometro' as const,
     nome: 'Horas e capacidade',
     url: 'ariuno.com.br · produtividade',
     print: 'produtividade',
@@ -187,6 +210,7 @@ export const funcionalidades = [
   },
   {
     id: 'relatorio',
+    icone: 'relatorio' as const,
     nome: 'Relatório do cliente',
     url: 'ariuno.com.br · relatório do cliente',
     print: 'relatorio-cliente',
@@ -196,6 +220,7 @@ export const funcionalidades = [
   },
   {
     id: 'aprovacoes',
+    icone: 'aprovacao' as const,
     nome: 'Aprovações e pedidos',
     url: 'ariuno.com.br · solicitações',
     print: 'solicitacoes',
@@ -205,6 +230,7 @@ export const funcionalidades = [
   },
   {
     id: 'formularios',
+    icone: 'formulario' as const,
     nome: 'Formulário de briefing',
     url: 'ariuno.com.br · formulários',
     print: 'formularios',
@@ -214,6 +240,7 @@ export const funcionalidades = [
   },
   {
     id: 'financeiro',
+    icone: 'financeiro' as const,
     nome: 'Financeiro',
     url: 'ariuno.com.br · financeiro',
     print: 'financeiro',
@@ -223,6 +250,7 @@ export const funcionalidades = [
   },
   {
     id: 'ia',
+    icone: 'ia' as const,
     nome: 'Ariuno IA',
     url: 'ariuno.com.br · ariuno ia',
     print: 'ia',
@@ -232,6 +260,7 @@ export const funcionalidades = [
   },
   {
     id: 'arena',
+    icone: 'trofeu' as const,
     nome: 'Arena, adoção do time',
     url: 'ariuno.com.br · arena',
     print: 'arena',
@@ -284,6 +313,7 @@ export const operacoes = {
   itens: [
     {
       id: 'agencia',
+      icone: 'maleta' as const,
       nome: 'Agência e trade',
       texto:
         'Briefing do cliente, produção, aprovação, entrega e horas × contrato, com portal para o cliente acompanhar sem pedir status.',
@@ -292,6 +322,7 @@ export const operacoes = {
     },
     {
       id: 'industria',
+      icone: 'fabrica' as const,
       nome: 'Indústria',
       texto:
         'Pedidos de filiais, regionais e áreas viram uma fila só, com responsável, prazo e aprovação de compras documentada.',
@@ -300,6 +331,7 @@ export const operacoes = {
     },
     {
       id: 'varejo',
+      icone: 'loja' as const,
       nome: 'Varejo e PDV',
       texto:
         'Implantação de loja, enxoval de PDV e cronograma por praça, com checklist e foto de execução anexada na tarefa.',
@@ -308,6 +340,7 @@ export const operacoes = {
     },
     {
       id: 'servicos',
+      icone: 'relogio' as const,
       nome: 'Serviços por hora',
       texto:
         'Jurídico, contábil, arquitetura e TI: hora por cliente, aprovação documentada e relatório de consumo para anexar na fatura.',
@@ -316,6 +349,7 @@ export const operacoes = {
     },
     {
       id: 'internos',
+      icone: 'predio' as const,
       nome: 'Times internos',
       texto:
         'RH, compras e financeiro recebem solicitações com aprovação, comprovante e histórico de quem decidiu o quê.',

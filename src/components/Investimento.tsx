@@ -1,7 +1,10 @@
 import { useMemo, useState } from 'react';
 import { investimento } from '../content/site';
 import { faixaDe, mensalidade } from '../lib/preco';
-import { Botao, Revelar, Rotulo, Titulo } from './base';
+import { Botao, Revelar, Rotulo, Selo, TituloCinema } from './base';
+import { Icone, type NomeIcone } from './Icone';
+
+const ICONES_CONDICAO: NomeIcone[] = ['pessoas', 'camadas', 'etiqueta', 'foguete', 'escudo', 'check'];
 import { brl } from '../hooks/uteis';
 
 const MAIOR = investimento.faixas[0].preco;
@@ -20,9 +23,7 @@ export default function Investimento() {
             <Revelar>
               <Rotulo n="09" texto={investimento.eyebrow} />
             </Revelar>
-            <Revelar atraso={80}>
-              <Titulo linhas={investimento.titulo} destaque={investimento.destaque} />
-            </Revelar>
+            <TituloCinema linhas={investimento.titulo} destaque={investimento.destaque} />
           </div>
           <Revelar atraso={140}>
             <p className="lead">{investimento.lead}</p>
@@ -98,9 +99,15 @@ export default function Investimento() {
                     )}
                   </ul>
                 </div>
-                <Botao href="#conversar" tipo="claro">
-                  Fazer uma proposta para {usuarios} usuários
-                </Botao>
+                <div className="flex flex-col gap-3">
+                  <Botao href="#conversar" tipo="claro" icone="etiqueta" grande>
+                    Quero a proposta para {usuarios} usuários
+                  </Botao>
+                  <div className="flex flex-wrap gap-2">
+                    <Selo icone="escudo" claro>Sem fidelidade</Selo>
+                    <Selo icone="relogio" claro>Resposta em 1 dia útil</Selo>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -149,9 +156,14 @@ export default function Investimento() {
 
         <div className="mt-[3px] grid gap-[3px] sm:grid-cols-2 lg:grid-cols-3">
           {investimento.condicoes.map((c, i) => (
-            <Revelar key={c.titulo} atraso={i * 50} className="rounded-[14px] bg-white p-5">
-              <p className="font-display text-[17px] font-bold tracking-[-0.02em]">{c.titulo}</p>
-              <p className="mt-1 text-[15px] leading-snug text-txt-2">{c.texto}</p>
+            <Revelar key={c.titulo} atraso={i * 50} className="peca-viva flex items-start gap-4 rounded-[14px] bg-white p-5">
+              <span className="mt-[2px] flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] bg-paper text-iris">
+                <Icone nome={ICONES_CONDICAO[i]} tamanho={20} />
+              </span>
+              <span>
+                <span className="block font-display text-[17px] font-bold tracking-[-0.02em]">{c.titulo}</span>
+                <span className="mt-1 block text-[15px] leading-snug text-txt-2">{c.texto}</span>
+              </span>
             </Revelar>
           ))}
         </div>

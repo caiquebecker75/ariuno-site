@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { funcionalidades, funcionalidadesExtras } from '../content/site';
-import { Print, Revelar, Rotulo, Titulo } from './base';
+import { Botao, Print, Revelar, Rotulo, TituloCinema } from './base';
+import { Icone } from './Icone';
 import { useMovimentoReduzido, useRevelar, urlPublica } from '../hooks/uteis';
 
 const INTERVALO = 5200;
@@ -56,9 +57,7 @@ export default function Produto() {
             <Revelar>
               <Rotulo n="04" texto="O produto por dentro" claro />
             </Revelar>
-            <Revelar atraso={80}>
-              <Titulo linhas={['Dez funcionalidades.', 'Dez coisas que', 'param de doer.']} destaque="param de doer." claro />
-            </Revelar>
+            <TituloCinema linhas={['Dez funcionalidades.', 'Dez coisas que', 'param de doer.']} destaque="param de doer." claro />
           </div>
           <Revelar atraso={150}>
             <p className="lead">
@@ -97,9 +96,14 @@ export default function Produto() {
                   >
                     <span className="flex items-center gap-3 whitespace-nowrap lg:whitespace-normal">
                       <span
-                        className="h-[7px] w-[7px] shrink-0 rounded-full transition-colors duration-300"
-                        style={{ background: sel ? 'var(--color-teal)' : 'rgb(255 255 255 / 0.22)' }}
-                      />
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[9px] transition-[background-color,color] duration-300"
+                        style={{
+                          background: sel ? 'var(--color-lime)' : 'rgb(255 255 255 / 0.08)',
+                          color: sel ? 'var(--color-ink)' : 'rgb(255 255 255 / 0.6)',
+                        }}
+                      >
+                        <Icone nome={f.icone} tamanho={17} />
+                      </span>
                       {f.nome}
                     </span>
                     {sel && !assumiu && !reduzido && (
@@ -117,7 +121,7 @@ export default function Produto() {
           </div>
 
           <div id="painel-produto" className="min-w-0" role="tabpanel" aria-labelledby={`aba-${atual.id}`}>
-            <Print key={atual.id} nome={atual.print} alt={atual.alt} url={atual.url} />
+            <Print key={atual.id} nome={atual.print} alt={atual.alt} url={atual.url} inclinar />
             <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <p key={`d-${atual.id}`} className="max-w-[54ch] text-[17px] leading-relaxed text-white/75">
                 {atual.descricao}
@@ -131,6 +135,16 @@ export default function Produto() {
               </p>
             </div>
             <p className="mt-6 text-[13px] leading-relaxed text-white/55 lg:hidden">{funcionalidadesExtras}</p>
+
+            <div className="mt-9 flex flex-col gap-4 rounded-[18px] bg-white/[0.06] p-6 sm:flex-row sm:items-center sm:justify-between">
+              <p className="max-w-[46ch] text-[16px] leading-snug text-white/75">
+                Quer ver isso com os <strong className="font-bold text-white">seus clientes e os seus projetos</strong> dentro?
+                Montamos um quadro real da sua operação no piloto.
+              </p>
+              <Botao href="#conversar" tipo="claro" icone="foguete">
+                Montar meu quadro
+              </Botao>
+            </div>
           </div>
         </div>
       </div>
