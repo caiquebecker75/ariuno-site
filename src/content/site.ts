@@ -21,11 +21,10 @@ export const site = {
 
 export const contato = {
   email: 'contato@setecincolab.com.br',
-  /** Número no formato internacional, sem sinais: 55 + DDD + número. Vazio esconde o botão. */
-  /* PREENCHER com o número real do comercial antes de ligar o botão.
-     O número que estava aqui era de exemplo e foi retirado do ar. */
-  whatsapp: '',
-  whatsappVisivel: '',
+  /** Número no formato internacional, sem sinais: 55 + DDD + número. Vazio esconde o botão.
+   *  Número informado pelo Caique em 23/09/2026. Se ele mudar, troque nas duas linhas. */
+  whatsapp: '5511987654321',
+  whatsappVisivel: '(11) 98765-4321',
   whatsappMensagem: 'Olá! Vim pelo site do Ariuno e quero conhecer a plataforma.',
   empresa: '75 LAB',
   empresaUrl: 'https://75lab.com.br',
