@@ -71,11 +71,19 @@ export default function Conversar() {
       return;
     }
 
+    // O Apps Script do Google não responde à checagem prévia do navegador, então o
+    // envio para ele vai como texto puro (o corpo continua sendo JSON).
+    const paraAppsScript = ENDPOINT.includes('script.google.com');
+    const corpo = JSON.stringify({ ...dados, origem: 'site ariuno' });
+
     try {
       const resposta = await fetch(ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ ...dados, origem: 'site ariuno' }),
+        headers: paraAppsScript
+          ? { 'Content-Type': 'text/plain;charset=utf-8' }
+          : { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: corpo,
+        redirect: 'follow',
       });
       if (!resposta.ok) throw new Error(String(resposta.status));
       form.reset();
