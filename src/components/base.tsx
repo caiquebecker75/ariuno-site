@@ -496,7 +496,7 @@ export function CtaFaixa({
 }
 
 /** Barra fixa de conversão: aparece depois da abertura e não sai mais. */
-export function BarraCta({ email }: { email: string }) {
+export function BarraCta({ email, whatsapp, mensagem }: { email: string; whatsapp?: string; mensagem?: string }) {
   const [visivel, setVisivel] = useState(false);
 
   useEffect(() => {
@@ -523,8 +523,21 @@ export function BarraCta({ email }: { email: string }) {
             <strong className="font-bold text-white">Piloto de 30 dias</strong> na sua operação real, sem fidelidade.
           </p>
           <div className="flex w-full items-center gap-2 sm:w-auto">
+            {whatsapp && (
+              <a
+                href={`https://wa.me/${whatsapp}${mensagem ? `?text=${encodeURIComponent(mensagem)}` : ''}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabIndex={visivel ? 0 : -1}
+                className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-[#25D366] hover:text-ink"
+                aria-label="Falar no WhatsApp"
+              >
+                <Icone nome="whatsapp" tamanho={20} />
+              </a>
+            )}
             <a
               href={`mailto:${email}`}
+              tabIndex={visivel ? 0 : -1}
               className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
               aria-label="Falar por e-mail"
             >

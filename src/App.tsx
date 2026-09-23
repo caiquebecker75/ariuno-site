@@ -61,7 +61,7 @@ export default function App() {
       </main>
       <Capitulos />
       <Rodape />
-      <BarraCta email={contato.email} />
+      <BarraCta email={contato.email} whatsapp={contato.whatsapp} mensagem={contato.whatsappMensagem} />
     </>
   );
 }

@@ -141,12 +141,15 @@ export default function Conversar() {
                     href={`https://wa.me/${contato.whatsapp}?text=${encodeURIComponent(contato.whatsappMensagem)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-white/70 transition-colors hover:text-white"
+                    className="group flex items-center gap-3 text-white/70 transition-colors hover:text-white"
                   >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors group-hover:bg-[#25D366] group-hover:text-ink">
                       <Icone nome="whatsapp" tamanho={19} />
                     </span>
-                    Falar no WhatsApp agora
+                    <span>
+                      Falar no WhatsApp agora
+                      <span className="block text-[13px] text-white/45">{contato.whatsappVisivel}</span>
+                    </span>
                   </a>
                 )}
               </div>

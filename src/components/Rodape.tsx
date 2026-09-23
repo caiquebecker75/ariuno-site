@@ -53,13 +53,13 @@ export default function Rodape() {
               {contato.whatsapp && (
                 <li>
                   <a
-                    href={`https://wa.me/${contato.whatsapp}`}
+                    href={`https://wa.me/${contato.whatsapp}?text=${encodeURIComponent(contato.whatsappMensagem)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 text-white/60 transition-colors duration-300 hover:text-white"
                   >
                     <Icone nome="whatsapp" tamanho={16} />
-                    WhatsApp
+                    {contato.whatsappVisivel}
                   </a>
                 </li>
               )}
