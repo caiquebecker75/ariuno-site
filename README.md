@@ -119,28 +119,51 @@ e esconde os elementos que são da demonstração e não do produto. Os PNG orig
 A imagem de compartilhamento (`public/og.jpg`) é gerada por `node tools/gerar-og.mjs`,
 com o servidor de desenvolvimento rodando.
 
-## Formulário, atribuição e Pixel
+## Formulário: para onde vão os contatos
 
-O formulário manda um `POST` com JSON para o servidor do Ariuno
-(`https://www.ariuno.com.br/api/leads/site`), que grava o lead, cria o card no quadro
-**Comercial · Leads Meta**, avisa o time e manda o evento para a API de Conversões da Meta.
-Detalhes no repositório da plataforma, em `docs/LEADS-META.md`. Para apontar para outro
-endereço, use `VITE_FORM_ENDPOINT` no `.env.local` (veja `.env.example`).
+Cada envio do formulário faz duas coisas ao mesmo tempo:
 
-Campos enviados: `nome`, `empresa`, `whatsapp`, `email`, `faixaUsuarios` (5-9, 10-19,
-20-39, 40+), `ferramentaAtual` (planilha-whatsapp, trello-asana, monday-clickup,
-outro-sistema), `consentimento`, `valorSimulado` (o valor da calculadora), a atribuição
-(`utm_*`, `fbclid`, `fbc`, `fbp`, `pagina`, `referrer`) e o `eventId`. Há campo isca contra
-robô, validação em português e, se o envio falhar, um botão que abre o e-mail do visitante
-com a mensagem pronta. O sucesso dispara `lead_enviado` em `window.dataLayer`.
+1. **avisa por e-mail** `caique.becker@75lab.com.br`, com os campos preenchidos e o
+   `Responder para` já apontando para o e-mail de quem preencheu;
+2. **grava o contato numa planilha** do Drive da conta `marketing@75lab.com.br`.
 
-A atribuição (`src/lib/atribuicao.ts`) guarda a origem da primeira página da sessão e, se a
-visita veio de campanha, também para as próximas visitas.
+**Ver a lista de contatos** (abre no celular, sem precisar do app de planilhas):
+https://script.google.com/macros/s/AKfycbxNNb1NRbzlI9HkUgSsvZRAnxCSomwtQLBVzHHCUHzUy3rR5CfnPxa0vC33lOwgM5ljAw/exec?chave=ariuno-leads-7f3a91
 
-O Pixel da Meta (`src/lib/pixel.ts`) só carrega quando `VITE_META_PIXEL_ID` existe no build.
-Eventos: `PageView`, `ViewContent` (seção de investimento), `SimulouPerda` (calculadora),
-`Contact` (qualquer botão de WhatsApp) e `Lead` (com o mesmo `eventID` do servidor, para a
-Meta deduplicar). A política de privacidade já descreve o Pixel e a API de Conversões.
+**A planilha:**
+https://docs.google.com/spreadsheets/d/124jJGSotbL0dhyM0hQgByMlFw1Ns7IyK6ih2Lpwpfho/edit
+
+Quem faz esse trabalho é um Apps Script chamado **Ariuno · recebedor do formulario do
+site**, publicado como aplicativo da Web na conta `marketing@75lab.com.br`. O endereço
+dele está em `.env` (`VITE_FORM_ENDPOINT`) e entra no build.
+
+### Mexer no recebedor
+
+O código fica no editor do Apps Script, em `script.google.com` com a conta da 75 LAB.
+Funções principais: `doPost` (recebe o envio), `doGet` (monta a lista), `limparTestes`
+(apaga linhas de teste). Depois de editar, é preciso **publicar uma nova versão**
+em Implantar → Gerenciar implantações → editar → Nova versão, senão o endereço
+continua servindo a versão anterior.
+
+Detalhes que valem lembrar:
+
+- O envio do site vai com `Content-Type: text/plain`, porque o Apps Script não responde
+  à checagem prévia do navegador quando o tipo é JSON. O corpo continua sendo JSON.
+- O primeiro envio depois de um tempo parado leva de 5 a 10 segundos, é a partida fria do
+  Google. O botão mostra que está enviando durante esse tempo.
+- O endereço do recebedor fica visível no JavaScript do site, como acontece com qualquer
+  site estático. A proteção contra robô é o campo isca do formulário. Se aparecer spam,
+  dá para exigir uma chave também no envio.
+- A chave da lista (`ariuno-leads-7f3a91`) é o que protege a página de contatos. Para
+  trocar, mude a constante `CHAVE` no script e publique uma nova versão.
+
+**Para trocar o e-mail que recebe os avisos**, altere a constante `DESTINO` no script e
+publique uma nova versão.
+
+**Se preferir outro serviço** (Formspree, Make, n8n, uma Cloud Function), basta trocar a
+URL em `.env` e refazer o build. O site funciona com qualquer endereço que aceite um
+`POST` com JSON. Sem nenhum endereço configurado, o formulário volta a abrir o programa
+de e-mail do visitante.
 
 ## Publicar
 
