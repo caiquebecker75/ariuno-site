@@ -479,16 +479,30 @@ export const conversar = {
   campos: {
     nome: 'Seu nome',
     empresa: 'Empresa',
-    email: 'E-mail corporativo',
-    telefone: 'Telefone ou WhatsApp',
-    time: 'Tamanho do time',
-    mensagem: 'O que mais dói hoje na sua operação?',
+    whatsapp: 'WhatsApp',
+    email: 'E-mail de trabalho',
+    faixaUsuarios: 'Quantas pessoas usariam',
+    ferramentaAtual: 'Onde a operação roda hoje',
   },
-  tamanhos: ['5 a 9 pessoas', '10 a 19 pessoas', '20 a 39 pessoas', '40 a 79 pessoas', '80 pessoas ou mais'],
+  /** Os valores (`valor`) são os que o servidor do Ariuno aceita. Mude só o rótulo. */
+  faixasUsuarios: [
+    { valor: '5-9', rotulo: '5 a 9' },
+    { valor: '10-19', rotulo: '10 a 19' },
+    { valor: '20-39', rotulo: '20 a 39' },
+    { valor: '40+', rotulo: '40 ou mais' },
+  ],
+  ferramentas: [
+    { valor: 'planilha-whatsapp', rotulo: 'Planilha e WhatsApp' },
+    { valor: 'trello-asana', rotulo: 'Trello ou Asana' },
+    { valor: 'monday-clickup', rotulo: 'monday ou ClickUp' },
+    { valor: 'outro-sistema', rotulo: 'Outro sistema' },
+  ],
+  escolha: 'Escolha uma opção',
   enviar: 'Quero o piloto de 30 dias',
   enviando: 'Enviando...',
   sucesso: 'Recebemos. Respondemos em até um dia útil com uma agenda para conversar.',
-  erro: 'Não conseguimos enviar agora. Fale com a gente pelo e-mail abaixo que resolvemos na hora.',
+  erro: 'Não conseguimos enviar pelo site agora. Mande pelo e-mail: a mensagem já sai pronta com os seus dados.',
+  erroBotao: 'Enviar por e-mail',
 };
 
 export const rodape = {

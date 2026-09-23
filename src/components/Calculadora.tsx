@@ -3,6 +3,7 @@ import { calculadora } from '../content/site';
 import { custoRetrabalho, mensalidade } from '../lib/preco';
 import { Botao, Revelar, Rotulo, TituloCinema } from './base';
 import { Icone, type NomeIcone } from './Icone';
+import { rastrearSimulacao } from '../lib/pixel';
 import { anunciarValorEmRisco, brl, useContador, useRevelar } from '../hooks/uteis';
 
 function Controle({
@@ -69,6 +70,19 @@ export default function Calculadora() {
   useEffect(() => {
     anunciarValorEmRisco(conta.mes);
   }, [conta.mes]);
+
+  // SimulouPerda no Pixel: só quando a PESSOA mexe (o valor inicial não conta),
+  // e com o valor em que ela parou (espera 1,2 s sem mexer).
+  const [mexeu, setMexeu] = useState(false);
+  useEffect(() => {
+    if (!mexeu) return;
+    const t = window.setTimeout(() => rastrearSimulacao(conta.mes), 1200);
+    return () => window.clearTimeout(t);
+  }, [mexeu, conta.mes]);
+  const mexer = (definir: (v: number) => void) => (v: number) => {
+    setMexeu(true);
+    definir(v);
+  };
   const proporcao = Math.max(3, Math.min(100, (plano.total / Math.max(conta.mes, 1)) * 100));
 
   return (
@@ -93,7 +107,7 @@ export default function Calculadora() {
                   {...calculadora.limites.pessoas}
                   passo={calculadora.limites.pessoas.passo}
                   formato={(v) => `${v}`}
-                  aoMudar={setPessoas}
+                  aoMudar={mexer(setPessoas)}
                 />
                 <Controle
                   icone="relogio"
@@ -102,7 +116,7 @@ export default function Calculadora() {
                   {...calculadora.limites.horasDia}
                   passo={calculadora.limites.horasDia.passo}
                   formato={(v) => (v < 1 ? `${v * 60} min` : `${String(v).replace('.', ',')} h`)}
-                  aoMudar={setHorasDia}
+                  aoMudar={mexer(setHorasDia)}
                 />
                 <Controle
                   icone="financeiro"
@@ -111,7 +125,7 @@ export default function Calculadora() {
                   {...calculadora.limites.valorHora}
                   passo={calculadora.limites.valorHora.passo}
                   formato={(v) => brl(v)}
-                  aoMudar={setValorHora}
+                  aoMudar={mexer(setValorHora)}
                 />
               </div>
               <p className="mt-7 text-[13px] leading-relaxed text-txt-3">{calculadora.nota}</p>

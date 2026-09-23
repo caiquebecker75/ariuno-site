@@ -119,25 +119,28 @@ e esconde os elementos que são da demonstração e não do produto. Os PNG orig
 A imagem de compartilhamento (`public/og.jpg`) é gerada por `node tools/gerar-og.mjs`,
 com o servidor de desenvolvimento rodando.
 
-## Formulário
+## Formulário, atribuição e Pixel
 
-Por padrão o formulário monta uma mensagem e abre o programa de e-mail do visitante,
-endereçada para `contato@setecincolab.com.br`. Funciona sem nenhuma configuração, mas
-depende do visitante concluir o envio.
+O formulário manda um `POST` com JSON para o servidor do Ariuno
+(`https://www.ariuno.com.br/api/leads/site`), que grava o lead, cria o card no quadro
+**Comercial · Leads Meta**, avisa o time e manda o evento para a API de Conversões da Meta.
+Detalhes no repositório da plataforma, em `docs/LEADS-META.md`. Para apontar para outro
+endereço, use `VITE_FORM_ENDPOINT` no `.env.local` (veja `.env.example`).
 
-**Para receber os leads direto na caixa de entrada ou no CRM**, crie um endpoint
-(Formspree, Make, n8n, Zapier ou uma Cloud Function) e coloque a URL em `.env`:
+Campos enviados: `nome`, `empresa`, `whatsapp`, `email`, `faixaUsuarios` (5-9, 10-19,
+20-39, 40+), `ferramentaAtual` (planilha-whatsapp, trello-asana, monday-clickup,
+outro-sistema), `consentimento`, `valorSimulado` (o valor da calculadora), a atribuição
+(`utm_*`, `fbclid`, `fbc`, `fbp`, `pagina`, `referrer`) e o `eventId`. Há campo isca contra
+robô, validação em português e, se o envio falhar, um botão que abre o e-mail do visitante
+com a mensagem pronta. O sucesso dispara `lead_enviado` em `window.dataLayer`.
 
-```
-VITE_FORM_ENDPOINT=https://formspree.io/f/SEU_ID
-```
+A atribuição (`src/lib/atribuicao.ts`) guarda a origem da primeira página da sessão e, se a
+visita veio de campanha, também para as próximas visitas.
 
-O site envia um `POST` com JSON: `nome`, `empresa`, `email`, `telefone`, `time`,
-`mensagem`, `aceite` e `origem`. Existe armadilha contra robô (campo invisível), validação
-com mensagens em português, estado de carregando, sucesso e erro, e o erro sempre mostra o
-e-mail como saída. O envio dispara um evento `lead_enviado` em `window.dataLayer`, pronto
-para Google Tag Manager, GA4 ou Meta Pixel quando você instalar um deles. **Nenhuma
-ferramenta de rastreamento está instalada hoje**, e a política de privacidade diz isso.
+O Pixel da Meta (`src/lib/pixel.ts`) só carrega quando `VITE_META_PIXEL_ID` existe no build.
+Eventos: `PageView`, `ViewContent` (seção de investimento), `SimulouPerda` (calculadora),
+`Contact` (qualquer botão de WhatsApp) e `Lead` (com o mesmo `eventID` do servidor, para a
+Meta deduplicar). A política de privacidade já descreve o Pixel e a API de Conversões.
 
 ## Publicar
 
@@ -198,7 +201,7 @@ no total e entram em carregamento preguiçoso, com versão de 760px para celular
 - **Política de privacidade** (`privacidade.html`): falta razão social, CNPJ e endereço da
   empresa. Estão marcados como `[PREENCHER]` e há um aviso no topo da página.
 - **WhatsApp**: `contato.whatsapp` está vazio. Preencha para o botão aparecer.
-- **Endpoint do formulário**: sem ele, o envio vai pelo programa de e-mail do visitante.
+- **Pixel da Meta**: `VITE_META_PIXEL_ID` vazio deixa o Pixel desligado. Preencha no `.env.local` e rode o build.
 
 Nada além disso é provisório: preços, comparativo, números da operação e funcionalidades
 vieram do material comercial do Ariuno e da plataforma real.
