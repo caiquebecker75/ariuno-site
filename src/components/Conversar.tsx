@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { contato, conversar } from '../content/site';
-import { Botao, Revelar, Rotulo, Selo, TituloCinema } from './base';
+import { Botao, BotaoWhatsapp, Revelar, Rotulo, Selo, TituloCinema } from './base';
 import { Icone, type NomeIcone } from './Icone';
 import { brl, usarValorEmRisco } from '../hooks/uteis';
 
@@ -106,6 +106,18 @@ export default function Conversar() {
               <p className="lead mt-6">{conversar.lead}</p>
             </Revelar>
 
+            {contato.whatsapp && (
+              <Revelar atraso={170}>
+                <div className="mt-8 flex flex-wrap items-center gap-4">
+                  <BotaoWhatsapp numero={contato.whatsapp} mensagem={contato.whatsappMensagem} grande />
+                  <span className="text-[14px] leading-snug text-white/55">
+                    Prefere conversar agora?
+                    <span className="block text-white/40">{contato.whatsappVisivel}</span>
+                  </span>
+                </div>
+              </Revelar>
+            )}
+
             <Revelar atraso={200}>
               <ol className="mt-9 flex flex-col gap-[2px]">
                 {DEPOIS.map((passo, i) => (
@@ -136,22 +148,7 @@ export default function Conversar() {
                   </span>
                   {contato.email}
                 </a>
-                {contato.whatsapp && (
-                  <a
-                    href={`https://wa.me/${contato.whatsapp}?text=${encodeURIComponent(contato.whatsappMensagem)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-3 text-white/70 transition-colors hover:text-white"
-                  >
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition-colors group-hover:bg-[#25D366] group-hover:text-ink">
-                      <Icone nome="whatsapp" tamanho={19} />
-                    </span>
-                    <span>
-                      Falar no WhatsApp agora
-                      <span className="block text-[13px] text-white/45">{contato.whatsappVisivel}</span>
-                    </span>
-                  </a>
-                )}
+
               </div>
             </Revelar>
           </div>

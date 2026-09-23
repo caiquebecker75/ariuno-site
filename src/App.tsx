@@ -51,6 +51,8 @@ export default function App() {
             texto="Antes de comparar preço, compare o que cada uma resolve. Fazemos essa conta com você, com os números da sua empresa."
             botao="Pedir a minha proposta"
             selo="Resposta em 1 dia útil."
+            whatsapp={contato.whatsapp}
+            mensagem={contato.whatsappMensagem}
           />
         </div>
 

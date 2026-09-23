@@ -453,6 +453,8 @@ export function CtaFaixa({
   href = '#conversar',
   selo,
   icone = 'foguete',
+  whatsapp,
+  mensagem,
 }: {
   titulo: string;
   texto: string;
@@ -460,6 +462,8 @@ export function CtaFaixa({
   href?: string;
   selo?: string;
   icone?: NomeIcone;
+  whatsapp?: string;
+  mensagem?: string;
 }) {
   return (
     <Revelar>
@@ -483,9 +487,12 @@ export function CtaFaixa({
               </div>
             </div>
             <div className="flex shrink-0 flex-col items-start gap-3">
-              <Botao href={href} tipo="claro" icone="seta">
-                {botao}
-              </Botao>
+              <div className="flex flex-wrap items-center gap-3">
+                <Botao href={href} tipo="claro" icone="seta">
+                  {botao}
+                </Botao>
+                {whatsapp && <BotaoWhatsapp numero={whatsapp} mensagem={mensagem} rotulo="Chamar no WhatsApp" />}
+              </div>
               {selo && <span className="text-[13px] text-white/45">{selo}</span>}
             </div>
           </div>
@@ -524,16 +531,21 @@ export function BarraCta({ email, whatsapp, mensagem }: { email: string; whatsap
           </p>
           <div className="flex w-full items-center gap-2 sm:w-auto">
             {whatsapp && (
-              <a
-                href={`https://wa.me/${whatsapp}${mensagem ? `?text=${encodeURIComponent(mensagem)}` : ''}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                tabIndex={visivel ? 0 : -1}
-                className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-[#25D366] hover:text-ink"
-                aria-label="Falar no WhatsApp"
-              >
-                <Icone nome="whatsapp" tamanho={20} />
-              </a>
+              <>
+                <a
+                  href={`https://wa.me/${whatsapp}${mensagem ? `?text=${encodeURIComponent(mensagem)}` : ''}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  tabIndex={visivel ? 0 : -1}
+                  className="flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-full bg-zap text-ink transition-colors hover:bg-[#1FBF5A] sm:hidden"
+                  aria-label="Chamar no WhatsApp"
+                >
+                  <Icone nome="whatsapp" tamanho={20} />
+                </a>
+                <span className="hidden sm:block">
+                  <BotaoWhatsapp numero={whatsapp} mensagem={mensagem} tabIndex={visivel ? 0 : -1} />
+                </span>
+              </>
             )}
             <a
               href={`mailto:${email}`}
@@ -555,5 +567,38 @@ export function BarraCta({ email, whatsapp, mensagem }: { email: string; whatsap
         </div>
       </div>
     </div>
+  );
+}
+
+/** Botão de chamar no WhatsApp, na cor da própria ferramenta. */
+export function BotaoWhatsapp({
+  numero,
+  mensagem,
+  grande = false,
+  rotulo = 'Chamar no WhatsApp',
+  className = '',
+  tabIndex,
+}: {
+  numero: string;
+  mensagem?: string;
+  grande?: boolean;
+  rotulo?: string;
+  className?: string;
+  tabIndex?: number;
+}) {
+  if (!numero) return null;
+  return (
+    <a
+      href={`https://wa.me/${numero}${mensagem ? `?text=${encodeURIComponent(mensagem)}` : ''}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      tabIndex={tabIndex}
+      className={`inline-flex items-center justify-center gap-2 rounded-full bg-zap text-ink transition-[background-color,transform] duration-300 hover:bg-[#1FBF5A] ${
+        grande ? 'px-[30px] py-[18px] text-[17px]' : 'px-[24px] py-[14px] text-[15px]'
+      } font-bold leading-none ${className}`}
+    >
+      <Icone nome="whatsapp" tamanho={grande ? 21 : 19} />
+      {rotulo}
+    </a>
   );
 }
