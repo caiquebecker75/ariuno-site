@@ -4,8 +4,9 @@ Site institucional da plataforma **Ariuno**, o sistema de gestão de operação 
 pela 75 LAB. A plataforma continua em `ariuno.com.br`; este site vive num endereço próprio
 para não disputar espaço com o login.
 
-- **No ar (temporário, para revisão):** https://projetos.75lab.com.br/ariuno-site/
-- **Endereço definitivo:** `conheca.ariuno.com.br` (ver *Apontar o domínio*, abaixo)
+- **No ar:** https://conheca.ariuno.com.br
+- O endereço antigo `projetos.75lab.com.br/ariuno-site/` continua funcionando: o GitHub
+  redireciona sozinho para o domínio próprio.
 - **Plataforma:** https://ariuno.com.br
 - **Apresentação comercial:** https://projetos.75lab.com.br/ariuno-plataforma/
 
@@ -147,20 +148,23 @@ npm run build
 git add -A && git commit -m "atualiza o site" && git push
 ```
 
-### Apontar o domínio conheca.ariuno.com.br
+### O domínio conheca.ariuno.com.br (já configurado)
 
-1. No painel de DNS de `ariuno.com.br`, crie um registro **CNAME**:
-   `conheca` → `caiquebecker75.github.io`
-2. Crie o arquivo `docs/CNAME` com uma linha: `conheca.ariuno.com.br`
-   (e adicione a mesma linha em `public/CNAME` para não se perder no próximo build).
-3. Faça o push. Em Settings → Pages, confirme o domínio e marque *Enforce HTTPS*.
+Feito em 23/09/2026, não precisa refazer. Fica registrado aqui caso alguém precise
+repetir em outro projeto:
 
-Atenção: a partir do passo 2 o endereço temporário
-`projetos.75lab.com.br/ariuno-site/` deixa de responder, porque o repositório passa a
-ter domínio próprio. Faça o DNS primeiro.
+1. O `ariuno.com.br` aparece na Hostinger como **domínio externo** (registrado em outro
+   provedor), mas usa os nameservers da Hostinger. Por isso a zona de DNS não está em
+   Domínios → ariuno.com.br, e sim no botão **Gerenciar DNS** da lista de domínios, que
+   leva para `hpanel.hostinger.com/external-domain/ariuno.com.br/dns`.
+2. Lá foi criado o registro `CNAME · conheca · caiquebecker75.github.io · TTL 14400`.
+   Nenhum registro existente foi tocado, incluindo os de e-mail.
+3. `public/CNAME` guarda `conheca.ariuno.com.br`, e o build copia para `docs/CNAME`.
+4. O GitHub emitiu o certificado e o *Enforce HTTPS* está ligado.
 
-O `index.html`, o `sitemap.xml` e a política de privacidade já apontam para
-`https://conheca.ariuno.com.br`. Se o endereço final for outro, troque nesses três arquivos.
+O `index.html`, o `sitemap.xml` e a política de privacidade apontam para
+`https://conheca.ariuno.com.br`. Se o endereço mudar, troque nesses três arquivos e no
+`public/CNAME`.
 
 ## Tecnologias
 
