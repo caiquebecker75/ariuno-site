@@ -17,6 +17,12 @@ export const site = {
    *  Para ligar o botão, troque para true e confira o link em `demoUrl`. */
   mostrarDemo: false,
   demoUrl: 'https://ariuno.com.br/?demo=1',
+  /** Abertura de conta com teste de 15 dias, direto na plataforma, sem falar com
+   *  ninguem. A conta nasce na hora e bloqueia sozinha no vencimento se nao for
+   *  liberada. Para tirar do ar, basta `mostrarCadastro: false`. */
+  mostrarCadastro: true,
+  cadastroUrl: 'https://ariuno.com.br/?comecar=1',
+  diasTeste: 15,
 } as const;
 
 export const contato = {

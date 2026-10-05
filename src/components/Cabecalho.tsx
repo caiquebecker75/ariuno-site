@@ -90,6 +90,16 @@ export default function Cabecalho() {
             >
               Entrar
             </a>
+            {site.mostrarCadastro && (
+              <a
+                href={site.cadastroUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden text-[14px] font-medium text-white/70 transition-colors duration-300 hover:text-white md:block"
+              >
+                Testar grátis
+              </a>
+            )}
             <div className="hidden sm:block">
               <Botao href="#conversar" tipo="claro" icone="foguete">
                 Agendar piloto

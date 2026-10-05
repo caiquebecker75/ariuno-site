@@ -118,6 +118,11 @@ export default function Hero() {
                 <Botao href={hero.ctaPrimario.href} tipo="claro" icone="foguete" grande>
                   {hero.ctaPrimario.rotulo}
                 </Botao>
+                {site.mostrarCadastro && (
+                  <Botao href={site.cadastroUrl} tipo="contorno" externo icone="foguete">
+                    Testar {site.diasTeste} dias grátis
+                  </Botao>
+                )}
                 <Botao href={hero.ctaSecundario.href} tipo="contorno" icone="play">
                   {hero.ctaSecundario.rotulo}
                 </Botao>
