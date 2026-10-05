@@ -387,8 +387,8 @@ export const comparativo = {
     { recurso: 'White-label: sua marca e seu domínio', marcas: ['sim', 'nao', 'nao', 'nao', 'nao', 'nao'] },
   ],
   preco: {
-    recurso: 'Preço por usuário/mês, faixa de 20 a 39 pessoas',
-    valores: ['R$ 87', 'R$ 105', '≈ R$ 137', '≈ R$ 66', 'R$ 59', 'R$ 70'],
+    recurso: 'Preço por usuário/mês, time acima de 15 pessoas',
+    valores: ['R$ 119', 'R$ 105', '≈ R$ 137', '≈ R$ 66', 'R$ 59', 'R$ 70'],
   },
   legenda: [
     { marca: 'sim', texto: 'entrega de fábrica' },
@@ -400,24 +400,26 @@ export const comparativo = {
 
 export const investimento = {
   eyebrow: 'Investimento',
-  titulo: ['Quanto mais gente entra,', 'menos custa cada pessoa.'],
+  titulo: ['Quanto maior o time,', 'menos custa cada pessoa.'],
   destaque: 'menos custa cada pessoa.',
-  lead: 'Preço por usuário ativo, em tabela progressiva. O valor da faixa vale para todos os usuários da conta.',
+  lead: 'Preço por usuário ativo, em quatro faixas. Fechando um prazo de 6 meses ou mais o valor cai; no mensal você fica sem compromisso de permanência. O valor da faixa vale para todos os usuários da conta.',
+  modalidades: [
+    { chave: 'prazo', rotulo: 'Com prazo', nota: 'a partir de 6 meses' },
+    { chave: 'mensal', rotulo: 'Mensal', nota: 'sem fidelidade' },
+  ],
   faixas: [
-    { de: 5, ate: 9, preco: 119, rotulo: '5 a 9 usuários' },
-    { de: 10, ate: 19, preco: 99, rotulo: '10 a 19 usuários' },
-    { de: 20, ate: 39, preco: 87, rotulo: '20 a 39 usuários', selo: 'faixa mais contratada' },
-    { de: 40, ate: 79, preco: 75, rotulo: '40 a 79 usuários' },
-    { de: 80, ate: 149, preco: 64, rotulo: '80 a 149 usuários' },
-    { de: 150, ate: 9999, preco: 54, rotulo: '150 usuários ou mais', sobConsulta: true },
+    { de: 1, ate: 5, prazo: 179, mensal: 199, rotulo: 'até 5 usuários' },
+    { de: 6, ate: 10, prazo: 159, mensal: 179, rotulo: '6 a 10 usuários' },
+    { de: 11, ate: 15, prazo: 139, mensal: 159, rotulo: '11 a 15 usuários' },
+    { de: 16, ate: 9999, prazo: 119, mensal: 139, rotulo: 'acima de 15 usuários', selo: 'melhor valor por pessoa' },
   ],
   condicoes: [
     { titulo: 'Usuário cliente é grátis', texto: 'Ilimitados. Acompanham e aprovam sem ocupar assento.' },
     { titulo: 'Todos os módulos incluídos', texto: 'Sem funcionalidade trancada em plano superior.' },
-    { titulo: 'Plano anual à vista', texto: 'Desconto de 15% no valor do ano.' },
-    { titulo: 'Implantação e treinamento', texto: 'R$ 3.900, isenta no anual a partir de 20 usuários.' },
+    { titulo: 'Dois jeitos de contratar', texto: 'Com prazo de 6 meses ou mais sai mais barato. No mensal, sem fidelidade.' },
+    { titulo: 'Implantação e treinamento', texto: 'R$ 3.900, uma única vez, junto do primeiro pagamento.' },
     { titulo: 'White-label', texto: 'Sua marca e seu domínio por R$ 690 por mês.' },
-    { titulo: 'Sem fidelidade', texto: 'Mínimo de 5 usuários. Suporte em português com quem construiu a plataforma.' },
+    { titulo: 'Suporte em português', texto: 'Com quem construiu a plataforma, resposta em 1 dia útil.' },
   ],
 };
 

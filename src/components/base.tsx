@@ -388,7 +388,13 @@ export function TituloCinema({
   return (
     <Como ref={ref} className={classe} style={{ color: claro ? '#fff' : 'var(--color-ink)' }}>
       {linhas.map((linha, i) => (
-        <span key={linha} className="block overflow-hidden pb-[0.06em]">
+        <span
+          key={linha}
+          className="block overflow-hidden pb-[0.06em]"
+          // o Safari do iOS às vezes não recorta filho transformado sem um
+          // contexto próprio: o translateZ e o isolate garantem o recorte
+          style={{ transform: 'translateZ(0)', isolation: 'isolate' }}
+        >
           <span
             className="block will-change-transform"
             style={{

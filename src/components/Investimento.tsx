@@ -1,19 +1,19 @@
 import { useMemo, useState } from 'react';
 import { investimento } from '../content/site';
-import { faixaDe, mensalidade } from '../lib/preco';
+import { faixaDe, mensalidade, type Ciclo } from '../lib/preco';
 import { Botao, Revelar, Rotulo, Selo, TituloCinema } from './base';
 import { Icone, type NomeIcone } from './Icone';
 
 const ICONES_CONDICAO: NomeIcone[] = ['pessoas', 'camadas', 'etiqueta', 'foguete', 'escudo', 'check'];
 import { brl } from '../hooks/uteis';
 
-const MAIOR = investimento.faixas[0].preco;
+const MAIOR = investimento.faixas[0].prazo;
 
 export default function Investimento() {
-  const [usuarios, setUsuarios] = useState(5);
-  const plano = useMemo(() => mensalidade(usuarios), [usuarios]);
+  const [usuarios, setUsuarios] = useState(10);
+  const [ciclo, setCiclo] = useState<Ciclo>('prazo');
+  const plano = useMemo(() => mensalidade(usuarios, ciclo), [usuarios, ciclo]);
   const faixaAtual = faixaDe(usuarios);
-  const anual = plano.total * 12 * 0.85;
 
   return (
     <section id="investimento" className="secao bg-paper">
@@ -47,40 +47,62 @@ export default function Investimento() {
                 <input
                   id="usuarios"
                   type="range"
-                  min={5}
+                  min={1}
                   max={200}
                   step={1}
                   value={usuarios}
                   onChange={(e) => setUsuarios(Number(e.target.value))}
                   className="mt-6 h-[26px] w-full appearance-none bg-transparent"
-                  style={{ ['--preenchido' as string]: `${((usuarios - 5) / 195) * 100}%` }}
+                  style={{ ['--preenchido' as string]: `${((usuarios - 1) / 199) * 100}%` }}
                 />
                 <div className="mt-2 flex justify-between font-mono text-[11px] uppercase tracking-[0.1em] text-txt-3">
-                  <span>5</span>
+                  <span>1</span>
                   <span>200+</span>
+                </div>
+
+                {/* Com prazo sai mais barato; no mensal não há fidelidade */}
+                <div className="mt-7 inline-flex rounded-[12px] bg-paper p-[4px]" role="group" aria-label="Como contratar">
+                  {investimento.modalidades.map((m) => {
+                    const ativo = ciclo === m.chave;
+                    return (
+                      <button
+                        key={m.chave}
+                        type="button"
+                        onClick={() => setCiclo(m.chave as Ciclo)}
+                        aria-pressed={ativo}
+                        className="rounded-[9px] px-4 py-[10px] text-left transition-colors duration-300"
+                        style={{ background: ativo ? 'var(--color-ink)' : 'transparent', color: ativo ? '#fff' : 'var(--color-txt-2)' }}
+                      >
+                        <span className="block font-display text-[15px] font-bold tracking-[-0.02em]">{m.rotulo}</span>
+                        <span className="mt-[2px] block font-mono text-[10px] uppercase tracking-[0.1em]" style={{ opacity: 0.62 }}>
+                          {m.nota}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
 
                 <div className="mt-8 flex flex-wrap gap-x-10 gap-y-5">
                   <div>
                     <p className="rotulo text-txt-3">Por usuário</p>
-                    <p className="mt-2 font-display text-[28px] font-bold tracking-[-0.03em]">
-                      {faixaAtual.sobConsulta ? 'sob consulta' : brl(plano.porUsuario)}
-                    </p>
+                    <p className="mt-2 font-display text-[28px] font-bold tracking-[-0.03em]">{brl(plano.porUsuario)}</p>
                   </div>
                   <div>
                     <p className="rotulo text-txt-3">Por mês</p>
                     <p className="mt-2 font-display text-[28px] font-bold tracking-[-0.03em] text-iris">{brl(plano.total)}</p>
                   </div>
                   <div>
-                    <p className="rotulo text-txt-3">Anual à vista</p>
-                    <p className="mt-2 font-display text-[28px] font-bold tracking-[-0.03em]">{brl(anual)}</p>
+                    <p className="rotulo text-txt-3">{ciclo === 'prazo' ? 'Economia por mês' : 'Com prazo ficaria'}</p>
+                    <p className="mt-2 font-display text-[28px] font-bold tracking-[-0.03em]">
+                      {ciclo === 'prazo' ? brl(plano.economiaMes) : brl(plano.totalOutro)}
+                    </p>
                   </div>
                 </div>
-                {faixaAtual.sobConsulta && (
-                  <p className="mt-5 text-[14px] text-txt-2">
-                    Acima de 150 usuários o valor é fechado na proposta, a partir de {brl(54)} por usuário.
-                  </p>
-                )}
+                <p className="mt-5 text-[14px] text-txt-2">
+                  {ciclo === 'prazo'
+                    ? `Faixa ${faixaAtual.rotulo}: ${brl(faixaAtual.prazo)} por usuário com prazo de 6 meses ou mais. No mensal, ${brl(faixaAtual.mensal)}.`
+                    : `Faixa ${faixaAtual.rotulo}: ${brl(faixaAtual.mensal)} por usuário sem fidelidade. Fechando 6 meses ou mais, ${brl(faixaAtual.prazo)}.`}
+                </p>
               </div>
 
               <div className="flex flex-col justify-between gap-6 bg-ink escuro p-[clamp(24px,3vw,46px)]">
@@ -104,7 +126,7 @@ export default function Investimento() {
                     Quero a proposta para {usuarios} usuários
                   </Botao>
                   <div className="flex flex-wrap gap-2">
-                    <Selo icone="escudo" claro>Sem fidelidade</Selo>
+                    <Selo icone="escudo" claro>{ciclo === 'prazo' ? 'Prazo de 6 meses' : 'Sem fidelidade'}</Selo>
                     <Selo icone="relogio" claro>Resposta em 1 dia útil</Selo>
                   </div>
                 </div>
@@ -115,10 +137,10 @@ export default function Investimento() {
 
         {/* A escada de preço: quanto mais gente, menor o valor por pessoa */}
         <div className="mt-[clamp(38px,4.4vw,64px)]">
-          <ul className="grid gap-[3px] sm:grid-cols-2 lg:grid-cols-6">
+          <ul className="grid gap-[3px] sm:grid-cols-2 lg:grid-cols-4">
             {investimento.faixas.map((f, i) => {
               const dentroDaFaixa = usuarios >= f.de && usuarios <= f.ate;
-              const altura = 26 + (f.preco / MAIOR) * 92;
+              const altura = 26 + (f.prazo / MAIOR) * 92;
               return (
                 <Revelar key={f.rotulo} como="li" atraso={i * 60}>
                   <div
@@ -136,10 +158,11 @@ export default function Investimento() {
                       }}
                       aria-hidden="true"
                     />
-                    <p className="font-display text-[26px] font-extrabold tracking-[-0.03em]">
-                      {f.sobConsulta ? `${brl(f.preco)}+` : brl(f.preco)}
+                    <p className="font-display text-[26px] font-extrabold tracking-[-0.03em]">{brl(f.prazo)}</p>
+                    <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.1em]" style={{ opacity: 0.6 }}>
+                      com prazo · {brl(f.mensal)} no mensal
                     </p>
-                    <p className="mt-1 text-[13px] leading-snug" style={{ opacity: 0.66 }}>
+                    <p className="mt-2 text-[13px] leading-snug" style={{ opacity: 0.66 }}>
                       {f.rotulo}
                     </p>
                     {f.selo && (

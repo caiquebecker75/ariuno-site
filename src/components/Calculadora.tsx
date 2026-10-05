@@ -160,7 +160,7 @@ export default function Calculadora() {
                   />
                 </div>
                 <p className="mt-4 text-[14px] leading-relaxed text-white/50">
-                  {pessoas} usuários na faixa de {brl(plano.porUsuario)} por pessoa ao mês.
+                  {pessoas} usuários na faixa de {brl(plano.porUsuario)} por pessoa ao mês, com prazo de 6 meses.
                   {conta.mes > plano.total * 1.2 && (
                     <>
                       {' '}
