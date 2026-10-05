@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from 'react';
 import { ampliarPrint, useMovimentoReduzido, useRevelar, urlPublica } from '../hooks/uteis';
 import { Icone, type NomeIcone } from './Icone';
+import { site } from '../content/site';
 
 /** Marca do Ariuno: o traço único que atravessa o site inteiro. */
 export function Marca({ tamanho = 30, comNome = true, claro = true }: { tamanho?: number; comNome?: boolean; claro?: boolean }) {
@@ -455,6 +456,7 @@ export function CtaFaixa({
   icone = 'foguete',
   whatsapp,
   mensagem,
+  externo = false,
 }: {
   titulo: string;
   texto: string;
@@ -464,6 +466,7 @@ export function CtaFaixa({
   icone?: NomeIcone;
   whatsapp?: string;
   mensagem?: string;
+  externo?: boolean;
 }) {
   return (
     <Revelar>
@@ -488,7 +491,7 @@ export function CtaFaixa({
             </div>
             <div className="flex shrink-0 flex-col items-start gap-3">
               <div className="flex flex-wrap items-center gap-3">
-                <Botao href={href} tipo="claro" icone="seta">
+                <Botao href={href} tipo="claro" icone="seta" externo={externo}>
                   {botao}
                 </Botao>
                 {whatsapp && <BotaoWhatsapp numero={whatsapp} mensagem={mensagem} rotulo="Chamar no WhatsApp" />}
@@ -527,7 +530,7 @@ export function BarraCta({ email, whatsapp, mensagem }: { email: string; whatsap
       <div className="limite">
         <div className="flex items-center justify-between gap-4 rounded-[18px] bg-ink/95 px-4 py-3 shadow-[0_18px_50px_-20px_rgb(11_13_30/0.7)] backdrop-blur-md sm:px-6 sm:py-4">
           <p className="hidden text-[15px] leading-snug text-white/75 sm:block">
-            <strong className="font-bold text-white">Piloto de 30 dias</strong> na sua operação real, sem fidelidade.
+            <strong className="font-bold text-white">15 dias grátis</strong> na sua operação real. Sem cartão, sem contrato.
           </p>
           <div className="flex w-full items-center gap-2 sm:w-auto">
             {whatsapp && (
@@ -558,9 +561,18 @@ export function BarraCta({ email, whatsapp, mensagem }: { email: string; whatsap
             <a
               href="#conversar"
               tabIndex={visivel ? 0 : -1}
+              className="hidden h-[46px] items-center justify-center gap-2 rounded-full border border-white/25 px-5 text-[15px] font-semibold text-white transition-colors hover:bg-white/10 sm:flex"
+            >
+              Falar com a gente
+            </a>
+            <a
+              href={site.cadastroUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              tabIndex={visivel ? 0 : -1}
               className="flex h-[46px] flex-1 items-center justify-center gap-2 rounded-full bg-lime px-6 text-[15px] font-bold text-ink transition-colors hover:bg-[#d4ff66] sm:flex-none"
             >
-              Agendar meu piloto
+              Criar minha conta
               <Icone nome="seta" tamanho={17} />
             </a>
           </div>

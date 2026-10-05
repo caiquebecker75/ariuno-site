@@ -1,4 +1,4 @@
-import { implantacao } from '../content/site';
+import { implantacao, site } from '../content/site';
 import { Botao, Revelar, Rotulo, TituloCinema } from './base';
 import { Icone, type NomeIcone } from './Icone';
 
@@ -51,8 +51,11 @@ export default function Implantacao() {
         </ol>
 
         <div className="mt-[clamp(28px,3vw,44px)] flex flex-wrap items-center gap-4">
-          <Botao href="#conversar" tipo="claro" icone="foguete" grande>
-            Começar o piloto de 30 dias
+          <Botao href={site.cadastroUrl} tipo="claro" icone="foguete" externo grande>
+            Criar conta e testar 15 dias
+          </Botao>
+          <Botao href="#conversar" tipo="contorno" icone="email">
+            Falar com a gente
           </Botao>
           <span className="text-[14px] text-white/60">Se não mudar o seu dia, você não continua.</span>
         </div>

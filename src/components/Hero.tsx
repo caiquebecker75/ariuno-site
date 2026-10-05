@@ -115,14 +115,12 @@ export default function Hero() {
 
             <Revelar atraso={340}>
               <div className="mt-8 flex flex-wrap items-center gap-3">
-                <Botao href={hero.ctaPrimario.href} tipo="claro" icone="foguete" grande>
+                <Botao href={hero.ctaPrimario.href} tipo="claro" icone="foguete" externo={hero.ctaPrimario.externo} grande>
                   {hero.ctaPrimario.rotulo}
                 </Botao>
-                {site.mostrarCadastro && (
-                  <Botao href={site.cadastroUrl} tipo="contorno" externo icone="foguete">
-                    Testar {site.diasTeste} dias grátis
-                  </Botao>
-                )}
+                <Botao href="#conversar" tipo="contorno" icone="email">
+                  Falar com a gente
+                </Botao>
                 <Botao href={hero.ctaSecundario.href} tipo="contorno" icone="play">
                   {hero.ctaSecundario.rotulo}
                 </Botao>

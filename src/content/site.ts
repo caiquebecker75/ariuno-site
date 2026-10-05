@@ -52,7 +52,7 @@ export const hero = {
   destaque: 'operação.',
   lead:
     'Do briefing à nota fiscal num sistema só: o mesmo que roda a 75 LAB todos os dias, com carteira de cliente de verdade.',
-  ctaPrimario: { rotulo: 'Agendar o piloto de 30 dias', href: '#conversar' },
+  ctaPrimario: { rotulo: 'Criar conta e testar 15 dias', href: 'https://ariuno.com.br/?comecar=1', externo: true },
   ctaSecundario: { rotulo: 'Ver por dentro', href: '#produto' },
   pilulas: [
     { texto: 'Kanban, Gantt e calendário', icone: 'quadro' },
@@ -450,7 +450,7 @@ export const perguntas = {
     },
     {
       p: 'Em quanto tempo a empresa está rodando de verdade?',
-      r: 'O piloto é de 30 dias e o go-live acontece entre o dia 15 e o dia 21. O primeiro fechamento de mês é acompanhado por nós.',
+      r: 'A conta abre na hora, com 15 dias de teste e tudo liberado. Na prática o time entra no mesmo dia e o go-live acontece entre o dia 7 e o dia 15. O primeiro fechamento de mês é acompanhado por nós.',
     },
     {
       p: 'O time realmente aponta as horas?',
@@ -477,10 +477,10 @@ export const perguntas = {
 
 export const conversar = {
   eyebrow: 'Próximo passo',
-  titulo: ['Comece pelo piloto', 'de 30 dias.'],
-  destaque: 'de 30 dias.',
+  titulo: ['Prefere falar', 'com a gente?'],
+  destaque: 'com a gente?',
   lead:
-    'Configuramos um quadro real da sua operação, colocamos o seu time dentro e medimos o resultado. Se não mudar o seu dia, você não continua.',
+    'A conta você abre sozinho, em um minuto, e já começa a usar. Mas se quiser conversar antes, ver a plataforma com os seus números ou tirar dúvida de migração, é só chamar.',
   campos: {
     nome: 'Seu nome',
     empresa: 'Empresa',
@@ -503,7 +503,7 @@ export const conversar = {
     { valor: 'outro-sistema', rotulo: 'Outro sistema' },
   ],
   escolha: 'Escolha uma opção',
-  enviar: 'Quero o piloto de 30 dias',
+  enviar: 'Quero falar com vocês',
   enviando: 'Enviando...',
   sucesso: 'Recebemos. Respondemos em até um dia útil com uma agenda para conversar.',
   erro: 'Não conseguimos enviar pelo site agora. Mande pelo e-mail: a mensagem já sai pronta com os seus dados.',

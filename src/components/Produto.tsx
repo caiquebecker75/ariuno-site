@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { funcionalidades, funcionalidadesExtras } from '../content/site';
+import { funcionalidades, funcionalidadesExtras, site } from '../content/site';
 import { Botao, Print, Revelar, Rotulo, TituloCinema } from './base';
 import { Icone } from './Icone';
 import { useMovimentoReduzido, useRevelar, urlPublica } from '../hooks/uteis';
@@ -139,9 +139,9 @@ export default function Produto() {
             <div className="mt-9 flex flex-col gap-4 rounded-[18px] bg-white/[0.06] p-6 sm:flex-row sm:items-center sm:justify-between">
               <p className="max-w-[46ch] text-[16px] leading-snug text-white/75">
                 Quer ver isso com os <strong className="font-bold text-white">seus clientes e os seus projetos</strong> dentro?
-                Montamos um quadro real da sua operação no piloto.
+                Abra a sua conta e monte o quadro da sua operação nos 15 dias de teste.
               </p>
-              <Botao href="#conversar" tipo="claro" icone="foguete">
+              <Botao href={site.cadastroUrl} tipo="claro" icone="foguete" externo>
                 Montar meu quadro
               </Botao>
             </div>

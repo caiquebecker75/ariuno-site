@@ -40,7 +40,7 @@ const campoBase =
 const DEPOIS: { icone: NomeIcone; titulo: string; texto: string }[] = [
   { icone: 'email', titulo: 'Respondemos em 1 dia útil', texto: 'Com uma agenda de 30 minutos, sem apresentação genérica.' },
   { icone: 'busca', titulo: 'Olhamos a sua operação', texto: 'Entendemos o fluxo que você já usa e onde ele trava hoje.' },
-  { icone: 'foguete', titulo: 'Montamos o piloto', texto: 'Um quadro real, com o seu time dentro, medido por 30 dias.' },
+  { icone: 'foguete', titulo: 'Você não precisa esperar', texto: 'A conta abre na hora, com 15 dias de teste. A conversa é para tirar dúvida, não para liberar acesso.' },
 ];
 
 function Erro({ id, texto }: { id: string; texto?: string }) {
@@ -150,7 +150,7 @@ export default function Conversar() {
         ...(payload.utm_campaign ? [`Campanha: ${payload.utm_campaign}`] : []),
       ].join('\n');
       setLinkEmail(
-        `mailto:${contato.email}?subject=${encodeURIComponent(`Piloto do Ariuno · ${payload.empresa}`)}&body=${encodeURIComponent(corpo)}`,
+        `mailto:${contato.email}?subject=${encodeURIComponent(`Contato pelo site do Ariuno · ${payload.empresa}`)}&body=${encodeURIComponent(corpo)}`,
       );
       setEstado('erro');
     }
@@ -229,9 +229,9 @@ export default function Conversar() {
               <div className="flex flex-wrap items-center justify-between gap-3 bg-paper-2 px-[clamp(22px,2.6vw,40px)] py-4">
                 <p className="flex items-center gap-2 font-display text-[16px] font-bold tracking-[-0.02em] text-ink">
                   <span className="text-iris"><Icone nome="foguete" tamanho={19} /></span>
-                  Piloto de 30 dias
+                  Falar com a gente
                 </p>
-                <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-txt-2">sem fidelidade</p>
+                <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-txt-2">resposta em 1 dia útil</p>
               </div>
 
               <div className="p-[clamp(22px,2.6vw,40px)]">

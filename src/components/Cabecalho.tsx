@@ -90,19 +90,15 @@ export default function Cabecalho() {
             >
               Entrar
             </a>
-            {site.mostrarCadastro && (
-              <a
-                href={site.cadastroUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden text-[14px] font-medium text-white/70 transition-colors duration-300 hover:text-white md:block"
-              >
-                Testar grátis
-              </a>
-            )}
+            <a
+              href="#conversar"
+              className="hidden text-[14px] font-medium text-white/70 transition-colors duration-300 hover:text-white md:block"
+            >
+              Falar com a gente
+            </a>
             <div className="hidden sm:block">
-              <Botao href="#conversar" tipo="claro" icone="foguete">
-                Agendar piloto
+              <Botao href={site.cadastroUrl} tipo="claro" icone="foguete" externo>
+                Testar {site.diasTeste} dias grátis
               </Botao>
             </div>
             <button
@@ -154,7 +150,7 @@ export default function Cabecalho() {
         </nav>
         <div className="mt-10 flex flex-col gap-4">
           <Botao href="#conversar" tipo="claro" icone="foguete" grande onClick={() => setAberto(false)}>
-            Agendar o piloto de 30 dias
+            Testar 15 dias grátis
           </Botao>
           <a href={site.plataforma} target="_blank" rel="noopener noreferrer" className="text-white/60">
             Entrar na plataforma
